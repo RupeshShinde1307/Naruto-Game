@@ -1,0 +1,162 @@
+import pygame
+pygame.init()
+
+win = pygame.display.set_mode((700,500))
+pygame.display.set_caption("Naruto vs sasuke")
+
+walkRight = [pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NR2.png'),pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NR3.png'),pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NR1.png')]
+walkLeft = [pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NL2.png'),pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NL3.png'),pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NL1.png')]
+
+bg = pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\bg.png')
+stan = pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\Nstanding.png')
+
+Clock = pygame.time.Clock()
+
+class player():
+    def __init__(self,x,y,width,height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.speed = 10
+        self.isjump = False
+        self.jumpheight = 10                                                                            
+        self.left = False
+        self.right = False
+        self.walkCount= 0
+        self.standing = True
+
+
+
+    def draw(self,win):
+        if self.walkCount +1 > 6:
+           self.walkCount = 0
+
+        if not(self.standing):
+
+           if self.left:
+              win.blit(walkLeft[self.walkCount//2],(self.x,self.y))
+              self.walkCount +=1
+       
+           elif self.right:
+               win.blit(walkRight[self.walkCount//2],(self.x,self.y))
+               self.walkCount +=1
+
+        else:
+            if self.right:
+                win.blit(pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NR1.png'),(self.x,self.y))
+            else:
+                win.blit(pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\NL1.png'),(self.x,self.y))
+
+class weapons():
+    def __init__(self,x,y,width,height,facing):
+         self.x = x
+         self.y = y
+         self.width = width
+         self.height = height
+         self.facing = facing
+         self.vel = 8 * facing 
+    
+    def draw(self,win):
+        win.blit(pygame.image.load('C:\\Users\\Admin\\Desktop\\NARUTO PYGAME\\pics\\shur.png'),(self.x,self.y))
+
+run = True
+
+def redrawgamewindow():
+    
+    win.blit(bg,(0,0))
+    naruto.draw(win)
+    for shuriken in shurikens:
+        shuriken.draw(win)
+
+
+    pygame.display.update()
+
+
+
+naruto = player(500,400,100,100)
+shurikens = []
+throwspeed = 0
+
+while run:
+     ############ FRAME RATE #########
+    Clock.tick(25)
+       #################
+    if throwspeed >0:
+        throwspeed += 1
+
+    if throwspeed >3:
+        throwspeed = 0
+    
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+           run = False
+
+    for shuriken in shurikens:    
+        if shuriken.x <699 and shuriken.x>0:
+            shuriken.x += shuriken.vel
+
+        else:
+            shurikens.pop(shurikens.index(shuriken))
+
+      ########## KEYS #################
+    keys = pygame.key.get_pressed()
+
+      ########## SHOOTING #############
+    if keys[pygame.K_SPACE] and throwspeed == 0:
+
+        if naruto.left == True:
+            facing = -1
+        else:
+            facing = 1
+        
+        if len(shurikens) <5:
+
+            shurikens.append(weapons(round(naruto.x + naruto.width//2),round(naruto.y + naruto.height//2),40,40,facing))
+            throwspeed = 1
+      ########## LEFT ####################
+    if keys[pygame.K_LEFT] and naruto.x > naruto.speed:
+        naruto.x -= naruto.speed
+        naruto.left = True
+        naruto.right = False
+        naruto.standing = False
+
+      ############### RIGHT ###################
+    elif keys[pygame.K_RIGHT] and naruto.x < 690 - naruto.width - naruto.speed:
+        naruto.x += naruto.speed
+        naruto.left = False
+        naruto.right = True
+        naruto.standing = False
+
+    else:
+        naruto.standing = True
+        naruto.walkCount = 0
+
+     ############# JUMP ########################
+    if naruto.isjump == False:
+        if keys[pygame.K_UP]:
+            naruto.isjump = True
+            naruto.left = False
+            naruto.right = False
+            naruto.walkCount = 0
+
+    else:
+        if naruto.jumpheight >= -10:
+            neg = 1
+            
+            if naruto.jumpheight < 0:
+                neg=-1
+
+            naruto.y -= (naruto.jumpheight **2)* 0.5 * neg
+            naruto.jumpheight -=1
+
+        else:     
+           naruto.isjump=False
+           naruto.jumpheight = 10
+
+
+
+    redrawgamewindow()
+
+pygame.quit()  
