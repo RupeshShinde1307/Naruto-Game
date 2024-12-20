@@ -3,9 +3,11 @@
 
 
 
+
 🌟 Overview
 
 Naruto vs Sasuke is a straightforward and fun 2D game built with Python 🐍 and Pygame 🎨, inspired by the epic rivalry between Naruto Uzumaki and Sasuke Uchiha. The game focuses on action-packed gameplay where Naruto throws shuriken 🌀 to stop Sasuke, and Sasuke relentlessly charges toward Naruto. It’s a battle of survival—who will win? 🥋
+
 
 
 
@@ -16,6 +18,7 @@ Naruto's Shuriken Attack 🌀: Naruto can throw shurikens (ninja stars) to attac
 Sasuke's Charge 🏃‍♂️: Sasuke runs toward Naruto, and if he reaches Naruto, Naruto’s health decreases. ❤️
 
 🏆 Win Condition: The game ends when either Naruto or Sasuke’s health reaches zero. The survivor wins! 🎉
+
 
 
 
@@ -32,6 +35,7 @@ python main.py
 
 
 
+
 Controls 🕹️:
 
 Move Naruto: Arrow keys (←, →)
@@ -39,6 +43,7 @@ Move Naruto: Arrow keys (←, →)
 Throw Shuriken: Spacebar
 
 Objective 🎯: Strategically use Naruto’s shuriken attacks to defeat Sasuke before he reaches you!
+
 
 
 
@@ -54,6 +59,7 @@ Pixel-art inspired design for a nostalgic feel 🎨.
 
 
 
+
 🚀 Future Improvements
 
 Add more characters like Sakura, Kakashi, or Itachi 🌸⚡.
@@ -66,11 +72,13 @@ Include difficulty levels or power-ups 💪.
 
 
 
+
 🛠️ Tech Stack
 
 Language: Python 🐍
 
 Game Library: Pygame 🎮
+
 
 
 
